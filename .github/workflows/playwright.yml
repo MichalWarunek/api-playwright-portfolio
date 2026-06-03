@@ -15,14 +15,14 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: 'mwinteringham/restful-booker'
-        path: 'restfulBooker/restful-booker'
+        path: 'restful-booker'
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: lts/*
     - name: Install Restful-Booker dependencies
       run: |
-        cd restfulBooker/restful-booker
+        cd restful-booker
         npm install
     - name: Install Playwright dependencies
       run: npm ci
