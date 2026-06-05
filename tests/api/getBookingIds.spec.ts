@@ -1,8 +1,8 @@
 import { test, expect } from "../../fixtures";
 
 test.describe('test GET responses', () => {
-  test('Should get all booking ids', async ({ request }) => {
-    const response = await request.get('/booking');
+  test('Should get all booking ids', async ({ bookingClient }) => {
+    const response = await bookingClient.getBookingIds();
     expect(response.status()).toBe(200);
     const body = await response.json();
     expect(Array.isArray(body)).toBe(true);
