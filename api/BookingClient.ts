@@ -8,5 +8,7 @@ export class BookingClient {
     async getBookingIds() {
          return await this.request.get('/booking');
       }
-
+    async getBooking(id: string) {
+        return await this.request.get(`booking/${id}`);
+    }
 }
