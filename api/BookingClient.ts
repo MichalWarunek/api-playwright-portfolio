@@ -9,6 +9,14 @@ export class BookingClient {
          return await this.request.get('/booking');
       }
     async getBooking(id: string) {
-        return await this.request.get(`booking/${id}`);
+        return await this.request.get(`/booking/${id}`);
+    }
+    async postBooking(bookingData: object) {
+          const response = await this.request.post('/booking', {
+            data: bookingData
+          });
+          const body = await response.json();
+          const generatedId = body.bookingid;
+          return generatedId;
     }
 }
