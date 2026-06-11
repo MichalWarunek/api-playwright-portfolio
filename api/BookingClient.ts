@@ -19,4 +19,7 @@ export class BookingClient {
           const generatedId = body.bookingid;
           return generatedId;
     }
+    async deleteBooking(id: string) {
+        return await this.request.delete(`/booking/${id}`);
+    }
 }
