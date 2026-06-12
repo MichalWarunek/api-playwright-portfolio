@@ -19,6 +19,11 @@ export class BookingClient {
           const generatedId = body.bookingid;
           return generatedId;
     }
+    async postBookingRaw(bookingData: object) {
+        return await this.request.post('/booking', {
+          data: bookingData
+        });
+  }
     async deleteBooking(id: string) {
         return await this.request.delete(`/booking/${id}`);
     }
