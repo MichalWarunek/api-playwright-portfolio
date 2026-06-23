@@ -20,16 +20,16 @@ export class BookingClient {
     async getBooking(id: string) {
         return await this.request.get(`/booking/${id}`);
     }
-    async login() {
-      const response = await this.request.post('/auth', {
+    async login({ 
+      username = process.env.USER_NAME, 
+      password = process.env.USER_PASSWORD 
+    } = {}) {
+      return await this.request.post('/auth', {
         data: {
-        "username": process.env.USER_NAME,
-        "password": process.env.USER_PASSWORD
+        "username": username,
+        "password": password
         }
       });
-      const body = await response.json();
-          const token = body.token;
-          return token;
     }
     async postBooking(bookingData: object) {
           const response = await this.request.post('/booking', {

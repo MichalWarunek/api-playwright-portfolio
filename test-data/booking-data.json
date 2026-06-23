@@ -14,5 +14,9 @@
         "depositpaid": false,
         "bookingdates": { "checkin": "2020-01-01", "checkout": "2020-01-02" },
         "additionalneeds": "Dinner"
+      },
+      "invalidLogin": {
+        "username": "invalid",
+        "password": "invalid"
       }
 }
