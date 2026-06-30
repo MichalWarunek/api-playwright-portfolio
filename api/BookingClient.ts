@@ -52,7 +52,11 @@ export class BookingClient {
           data: bookingData
         });
   }
-    async deleteBooking(id: string) {
-        return await this.request.delete(`/booking/${id}`);
+    async deleteBooking(id: string, token: string) {
+        return await this.request.delete(`/booking/${id}`, {
+          headers: {
+            'Cookie': `token=${token}`
+          }
+        });
     }
 }

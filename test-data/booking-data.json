@@ -18,5 +18,11 @@
       "invalidLogin": {
         "username": "invalid",
         "password": "invalid"
+      },
+      "invalidBooking": {
+        "id": "test123"
+      },
+      "invalidToken": {
+        "token": "test321"
       }
 }

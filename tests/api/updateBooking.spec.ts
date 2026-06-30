@@ -14,7 +14,7 @@ test.describe('test PUT responses for bookings', () => {
 
   test.afterAll(async ({ bookingClient }) => {
     if (bookingId) {
-     await bookingClient.deleteBooking(bookingId);
+     await bookingClient.deleteBooking(bookingId, token);
     }
   });
   
