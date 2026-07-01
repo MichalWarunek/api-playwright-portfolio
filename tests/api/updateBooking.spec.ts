@@ -7,9 +7,7 @@ test.describe('test PUT responses for bookings', () => {
   
   test.beforeAll(async ({ bookingClient }) => {
     bookingId = await bookingClient.postBooking(bookingData.bookingPayload);
-    const login = await bookingClient.login();
-    const body = await login.json();
-    token = body.token;
+    token = await bookingClient.getToken();
   });
 
   test.afterAll(async ({ bookingClient }) => {

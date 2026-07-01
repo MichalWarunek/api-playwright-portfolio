@@ -7,9 +7,7 @@ test.describe('test DELETE responses for bookings', () => {
   
   test.beforeEach(async ({ bookingClient }) => {
     bookingId = await bookingClient.postBooking(bookingData.bookingPayload);
-    const login = await bookingClient.login();
-    const body = await login.json();
-    token = body.token;
+    token = await bookingClient.getToken();
   });
 
   
