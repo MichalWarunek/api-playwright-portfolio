@@ -51,7 +51,7 @@ export class BookingClient {
           const generatedId = body.bookingid;
           return generatedId;
     }
-    async updateBooking(bookingId: string, token: string, bookingData: BookingInterface) {
+    async updateBooking(bookingId: string, bookingData: BookingInterface, token = process.env.API_TOKEN) {
       return await this.request.put(`/booking/${bookingId}`, {
         data: bookingData,
         headers: {
@@ -64,7 +64,7 @@ export class BookingClient {
           data: bookingData
         });
   }
-    async deleteBooking(id: string, token: string) {
+    async deleteBooking(id: string, token = process.env.API_TOKEN) {
         return await this.request.delete(`/booking/${id}`, {
           headers: {
             'Cookie': `token=${token}`

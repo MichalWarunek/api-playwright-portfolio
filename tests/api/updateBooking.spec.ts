@@ -3,16 +3,14 @@ import bookingData from "../../test-data/booking-data.json";
 
 test.describe('test PUT responses for bookings', () => {
   let bookingId: string;
-  let token: string;
   
   test.beforeAll(async ({ bookingClient }) => {
     bookingId = await bookingClient.postBooking(bookingData.bookingPayload);
-    token = await bookingClient.getToken();
   });
 
   test.afterAll(async ({ bookingClient }) => {
     if (bookingId) {
-     await bookingClient.deleteBooking(bookingId, token);
+     await bookingClient.deleteBooking(bookingId);
     }
   });
   
@@ -21,7 +19,7 @@ test.describe('test PUT responses for bookings', () => {
     expect(bookingPayload.status()).toBe(200);
     const body = await bookingPayload.json();
     expect(body).toMatchObject(bookingData.bookingPayload);
-    const response = await bookingClient.updateBooking(bookingId, token, bookingData.bookingUpdate)
+    const response = await bookingClient.updateBooking(bookingId, bookingData.bookingUpdate)
     expect(response.status()).toBe(200);
     const currentBooking = await response.json();
     expect(currentBooking).toMatchObject(bookingData.bookingUpdate);

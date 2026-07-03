@@ -3,16 +3,14 @@ import bookingData from "../../test-data/booking-data.json";
 
 test.describe('test GET responses for bookings', () => {
   let bookingId: string;
-  let token: string;
   
   test.beforeAll(async ({ bookingClient }) => {
     bookingId = await bookingClient.postBooking(bookingData.bookingPayload);
-    token = await bookingClient.getToken();
   });
 
   test.afterAll(async ({ bookingClient }) => {
     if (bookingId) {
-     await bookingClient.deleteBooking(bookingId, token);
+     await bookingClient.deleteBooking(bookingId);
     }
   });
   
