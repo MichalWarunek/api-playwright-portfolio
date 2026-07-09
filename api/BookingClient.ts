@@ -11,8 +11,10 @@ interface BookingInterface {
 
 export class BookingClient {
     private request: APIRequestContext;
-    constructor(request: APIRequestContext) {
+    private token: string;
+    constructor(request: APIRequestContext, token: string) {
         this.request = request;
+        this.token = token;
     }
     async getBookingIds() {
          return await this.request.get('/booking');
@@ -51,11 +53,11 @@ export class BookingClient {
           const generatedId = body.bookingid;
           return generatedId;
     }
-    async updateBooking(bookingId: string, bookingData: BookingInterface, token = process.env.API_TOKEN) {
+    async updateBooking(bookingId: string, bookingData: BookingInterface, token?:string) {
       return await this.request.put(`/booking/${bookingId}`, {
         data: bookingData,
         headers: {
-          'Cookie': `token=${token}`
+          'Cookie': `token=${token ?? this.token}`
         }
       });
 }
@@ -64,10 +66,10 @@ export class BookingClient {
           data: bookingData
         });
   }
-    async deleteBooking(id: string, token = process.env.API_TOKEN) {
+    async deleteBooking(id: string, token?: string) {
         return await this.request.delete(`/booking/${id}`, {
           headers: {
-            'Cookie': `token=${token}`
+            'Cookie': `token=${token ?? this.token}`
           }
         });
     }
