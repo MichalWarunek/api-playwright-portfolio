@@ -12,10 +12,8 @@ test.describe('Test Select Booking Record', () => {
   });
 
 
-  test.afterAll(async () => {
-    if (randomId) {
-        await database.run('DELETE FROM bookings WHERE id = ?', [randomId]);
-      }
+  test.afterAll(async ({bookingDbClient}) => {
+    await bookingDbClient.deleteFromDb(randomId); 
     await db.close();
   });
 

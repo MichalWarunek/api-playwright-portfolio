@@ -25,6 +25,12 @@ export const db = {
     return dbInstance;
   },
 
+  run: async (sql: string, params: any[] = []) => {
+    if (!dbInstance) {
+      await db.init();
+    }
+    return await dbInstance!.run(sql, params);
+  },
   
   close: async () => {
     if (dbInstance) {
