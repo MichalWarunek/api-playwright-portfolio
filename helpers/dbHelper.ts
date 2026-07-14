@@ -18,7 +18,10 @@ export const db = {
           firstname TEXT,
           lastname TEXT,
           totalprice INTEGER,
-          depositpaid BOOLEAN
+          depositpaid BOOLEAN,
+          checkin TEXT,
+          checkout TEXT,
+          additionalneeds TEXT
         )
       `);
     }

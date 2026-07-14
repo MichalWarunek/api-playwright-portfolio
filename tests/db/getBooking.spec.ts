@@ -18,14 +18,9 @@ test.describe('Test Select Booking Record', () => {
     await db.close();
   });
 
-  test('Should create a booking via SQL and store in local SQLite', async () => {
+  test('Should create a booking via SQL and store in local SQLite', async ({bookingDbClient}) => {
     const payload = bookingData.bookingPayload;
- 
-    const result = await database.run(
-      'INSERT INTO bookings (firstname, lastname, totalprice, depositpaid) VALUES (?, ?, ?, ?)',
-      [payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid]
-    );
-    createdId = result.lastID!;
+    createdId = await bookingDbClient.insertBooking(payload);
 
 
     const dbRow = await database.get('SELECT * FROM bookings WHERE id = ?', [createdId]);
@@ -35,5 +30,8 @@ test.describe('Test Select Booking Record', () => {
     expect(dbRow.lastname).toBe(payload.lastname);
     expect(dbRow.totalprice).toBe(payload.totalprice);
     expect(Boolean(dbRow.depositpaid)).toBe(payload.depositpaid);
+    expect(dbRow.checkin).toBe(payload.bookingdates.checkin);
+    expect(dbRow.checkout).toBe(payload.bookingdates.checkout);
+    expect(dbRow.additionalneeds).toBe(payload.additionalneeds);
   });
 });

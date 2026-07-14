@@ -1,6 +1,16 @@
 import { db } from '../helpers/dbHelper';
 
-
+interface BookingInterface {
+  firstname: string,
+  lastname: string,
+  totalprice: number,
+  depositpaid: boolean,
+  bookingdates: {
+  checkin: string, 
+  checkout: string
+  },
+  additionalneeds: string
+}
 
 export class BookingDbClient {
  
@@ -9,5 +19,13 @@ export class BookingDbClient {
       if (id) {
         await db.run('DELETE FROM bookings WHERE id = ?', [id]);
       }
+    }
+    async insertBooking(payload: BookingInterface) {
+      const result = await db.run(
+        'INSERT INTO bookings (firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid, payload.bookingdates.checkin, payload.bookingdates.checkout, payload.additionalneeds]
+      );
+      return result.lastID!;
+
     }
 }
