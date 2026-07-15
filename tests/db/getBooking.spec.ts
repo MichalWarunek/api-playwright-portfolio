@@ -1,15 +1,18 @@
 import { Database } from "sqlite";
-import { test, expect } from "../../fixtures";
+import { test, expect, BookingInterface } from "../../fixtures";
 import { db } from '../../helpers/dbHelper';
 import bookingData from "../../test-data/booking-data.json";
 
 test.describe('Test Select Booking Record', () => {
  let database: Database;
+ let payload: BookingInterface;
  let createdId: number;
  
  
- test.beforeAll(async () => {
+ test.beforeAll(async ({bookingDbClient}) => {
     database = await db.init();
+    payload = bookingData.bookingPayload;
+    createdId = await bookingDbClient.insertBooking(payload);
   });
 
 
@@ -18,11 +21,7 @@ test.describe('Test Select Booking Record', () => {
     await db.close();
   });
 
-  test('Should create a booking via SQL and store in local SQLite', async ({bookingDbClient}) => {
-    const payload = bookingData.bookingPayload;
-    createdId = await bookingDbClient.insertBooking(payload);
-
-
+  test('Should SELECT existing booking from local SQLite', async () => {
     const dbRow = await database.get('SELECT * FROM bookings WHERE id = ?', [createdId]);
     expect(dbRow).toBeDefined();
     expect(dbRow.id).toBe(createdId);
@@ -33,5 +32,11 @@ test.describe('Test Select Booking Record', () => {
     expect(dbRow.checkin).toBe(payload.bookingdates.checkin);
     expect(dbRow.checkout).toBe(payload.bookingdates.checkout);
     expect(dbRow.additionalneeds).toBe(payload.additionalneeds);
+  });
+
+  test('Should SELECT non-existing booking from local SQLite', async () => {
+    const nonExistingId = 9999;
+    const dbRow = await database.get('SELECT * FROM bookings WHERE id = ?', [nonExistingId]);
+    expect(dbRow).toBeUndefined();
   });
 });

@@ -2,7 +2,7 @@ import { test as base } from "@playwright/test";
 import fs from 'fs';
 import path from 'path';
 import { BookingClient } from "../api/BookingClient";
-import { BookingDbClient } from "../db/BookingDbClient";
+import { BookingDbClient, BookingInterface } from "../db/BookingDbClient";
 
 
 type MyFixtures = {
@@ -10,6 +10,8 @@ type MyFixtures = {
     bookingDbClient: BookingDbClient;
     apiToken: string;
 };
+
+export { BookingInterface };
 
 export const test = base.extend<MyFixtures>({
     apiToken: async ({}, use) => {

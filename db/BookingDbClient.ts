@@ -1,6 +1,6 @@
 import { db } from '../helpers/dbHelper';
 
-interface BookingInterface {
+export interface BookingInterface {
   firstname: string,
   lastname: string,
   totalprice: number,
