@@ -20,6 +20,12 @@ export class BookingDbClient {
         await db.run('DELETE FROM bookings WHERE id = ?', [id]);
       }
     }
+    async selectFromDb(id: number) {
+      if (id) {
+       const dbRow = await db.get('SELECT * FROM bookings WHERE id = ?', [id]);
+       return dbRow;
+      }
+    }
     async insertBooking(payload: BookingInterface) {
       const result = await db.run(
         'INSERT INTO bookings (firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds) VALUES (?, ?, ?, ?, ?, ?, ?)',

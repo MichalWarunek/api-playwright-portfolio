@@ -34,6 +34,13 @@ export const db = {
     }
     return await dbInstance!.run(sql, params);
   },
+
+  get: async (sql: string, params: any[] = []) => {
+    if (!dbInstance) {
+      await db.init();
+    }
+    return await dbInstance!.get(sql, params);
+  },
   
   close: async () => {
     if (dbInstance) {

@@ -21,8 +21,8 @@ test.describe('Test Select Booking Record', () => {
     await db.close();
   });
 
-  test('Should SELECT existing booking from local SQLite', async () => {
-    const dbRow = await database.get('SELECT * FROM bookings WHERE id = ?', [createdId]);
+  test('Should SELECT existing booking from local SQLite', async ({bookingDbClient}) => {
+    const dbRow = await bookingDbClient.selectFromDb(createdId);
     expect(dbRow).toBeDefined();
     expect(dbRow.id).toBe(createdId);
     expect(dbRow.firstname).toBe(payload.firstname);
@@ -34,9 +34,9 @@ test.describe('Test Select Booking Record', () => {
     expect(dbRow.additionalneeds).toBe(payload.additionalneeds);
   });
 
-  test('Should SELECT non-existing booking from local SQLite', async () => {
+  test('Should SELECT non-existing booking from local SQLite', async ({bookingDbClient}) => {
     const nonExistingId = 9999;
-    const dbRow = await database.get('SELECT * FROM bookings WHERE id = ?', [nonExistingId]);
+    const dbRow = await bookingDbClient.selectFromDb(nonExistingId);
     expect(dbRow).toBeUndefined();
   });
 });
