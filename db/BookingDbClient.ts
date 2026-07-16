@@ -29,7 +29,7 @@ export class BookingDbClient {
     async insertBooking(payload: BookingInterface) {
       const result = await db.run(
         'INSERT INTO bookings (firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid, payload.bookingdates.checkin, payload.bookingdates.checkout, payload.additionalneeds]
+        [payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid, payload.bookingdates?.checkin, payload.bookingdates?.checkout, payload.additionalneeds]
       );
       return result.lastID!;
 

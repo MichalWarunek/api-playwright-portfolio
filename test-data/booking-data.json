@@ -7,6 +7,14 @@
         "bookingdates": { "checkin": "2026-06-01", "checkout": "2026-06-10" },
         "additionalneeds": "Breakfast"
       },
+      "invalidBookingPayload": {
+        "firstname": "",
+        "lastname": "",
+        "totalprice": 0,
+        "depositpaid": false,
+        "bookingdates": { "checkin": "", "checkout": "" },
+        "additionalneeds": ""
+      },
       "bookingUpdate": {
         "firstname": "Andrzej",
         "lastname": "Smith",

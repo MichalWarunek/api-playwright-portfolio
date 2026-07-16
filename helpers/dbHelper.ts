@@ -15,12 +15,12 @@ export const db = {
       await dbInstance.exec(`
         CREATE TABLE IF NOT EXISTS bookings (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          firstname TEXT,
-          lastname TEXT,
-          totalprice INTEGER,
-          depositpaid BOOLEAN,
-          checkin TEXT,
-          checkout TEXT,
+          firstname TEXT NOT NULL,
+          lastname TEXT NOT NULL,
+          totalprice INTEGER NOT NULL,
+          depositpaid BOOLEAN NOT NULL,
+          checkin TEXT NOT NULL,
+          checkout TEXT NOT NULL,
           additionalneeds TEXT
         )
       `);

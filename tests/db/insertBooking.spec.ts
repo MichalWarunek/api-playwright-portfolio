@@ -2,25 +2,23 @@ import { test, expect, BookingInterface } from "../../fixtures";
 import { db } from '../../helpers/dbHelper';
 import bookingData from "../../test-data/booking-data.json";
 
-test.describe('Test Select Booking Record', () => {
- 
+test.describe('Test Insert Booking Record', () => {
  let payload: BookingInterface;
  let createdId: number;
  
  
- test.beforeAll(async ({bookingDbClient}) => {
+ test.beforeAll(async () => {
     await db.init();
-    payload = bookingData.bookingPayload;
-    createdId = await bookingDbClient.insertBooking(payload);
   });
-
 
   test.afterAll(async ({bookingDbClient}) => {
     await bookingDbClient.deleteFromDb(createdId); 
     await db.close();
   });
 
-  test('Should SELECT existing booking from local SQLite', async ({bookingDbClient}) => {
+  test('Should insert valid booking to the local SQLite', async ({bookingDbClient}) => {
+    payload = bookingData.bookingPayload;
+    createdId = await bookingDbClient.insertBooking(payload);
     const dbRow = await bookingDbClient.selectFromDb(createdId);
     expect(dbRow).toBeDefined();
     expect(dbRow.id).toBe(createdId);
@@ -33,9 +31,9 @@ test.describe('Test Select Booking Record', () => {
     expect(dbRow.additionalneeds).toBe(payload.additionalneeds);
   });
 
-  test('Should SELECT non-existing booking from local SQLite', async ({bookingDbClient}) => {
-    const nonExistingId = 9999;
-    const dbRow = await bookingDbClient.selectFromDb(nonExistingId);
-    expect(dbRow).toBeUndefined();
+  test('Should throws SQLITE_CONSTRAINT while inserting invalid booking to the local SQLite', async ({bookingDbClient}) => {
+    const invalidPayload = bookingData.invalidBookingPayload;
+     await expect(async () => { 
+        await bookingDbClient.insertBooking(invalidPayload)}).rejects.toThrow('SQLITE_CONSTRAINT');
   });
 });
