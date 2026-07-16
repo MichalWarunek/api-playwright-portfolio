@@ -34,6 +34,6 @@ test.describe('Test Insert Booking Record', () => {
   test('Should throws SQLITE_CONSTRAINT while inserting invalid booking to the local SQLite', async ({bookingDbClient}) => {
     const invalidPayload = bookingData.invalidBookingPayload;
      await expect(async () => { 
-        await bookingDbClient.insertBooking(invalidPayload)}).rejects.toThrow('SQLITE_CONSTRAINT');
+        await bookingDbClient.insertBooking(invalidPayload as unknown as BookingInterface)}).rejects.toThrow('SQLITE_CONSTRAINT');
   });
 });

@@ -39,8 +39,8 @@ test.describe('API + SQLite Tests', () => {
     
  
     await database.run(
-      'INSERT INTO bookings (id, firstname, lastname, totalprice, depositpaid) VALUES (?, ?, ?, ?, ?)',
-      [generatedId, payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid]
+      'INSERT INTO bookings (id, firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [generatedId, payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid, payload.bookingdates.checkin, payload.bookingdates.checkout, payload.additionalneeds]
     );
 
 

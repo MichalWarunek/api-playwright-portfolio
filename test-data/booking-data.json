@@ -8,11 +8,11 @@
         "additionalneeds": "Breakfast"
       },
       "invalidBookingPayload": {
-        "firstname": "",
-        "lastname": "",
+        "firstname": null,
+        "lastname": null,
         "totalprice": 0,
         "depositpaid": false,
-        "bookingdates": { "checkin": "", "checkout": "" },
+        "bookingdates": { "checkin": null, "checkout": null },
         "additionalneeds": ""
       },
       "bookingUpdate": {
