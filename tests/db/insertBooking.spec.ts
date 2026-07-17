@@ -6,14 +6,8 @@ test.describe('Test Insert Booking Record', () => {
  let payload: BookingInterface;
  let createdId: number;
  
- 
- test.beforeAll(async () => {
-    await db.init();
-  });
-
   test.afterAll(async ({bookingDbClient}) => {
     await bookingDbClient.deleteFromDb(createdId); 
-    await db.close();
   });
 
   test('Should insert valid booking to the local SQLite', async ({bookingDbClient}) => {

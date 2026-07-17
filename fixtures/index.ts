@@ -3,17 +3,22 @@ import fs from 'fs';
 import path from 'path';
 import { BookingClient } from "../api/BookingClient";
 import { BookingDbClient, BookingInterface } from "../db/BookingDbClient";
+import { db } from '../helpers/dbHelper';
+
 
 
 type MyFixtures = {
     bookingClient: BookingClient;
-    bookingDbClient: BookingDbClient;
     apiToken: string;
 };
 
+type MyWorkerFixtures = {
+    bookingDbClient: BookingDbClient;
+}
+
 export { BookingInterface };
 
-export const test = base.extend<MyFixtures>({
+export const test = base.extend<MyFixtures, MyWorkerFixtures>({
     apiToken: async ({}, use) => {
         const authFile = path.join(process.cwd(), '.auth/user.json');
         if (!fs.existsSync(authFile)) {
@@ -25,9 +30,11 @@ export const test = base.extend<MyFixtures>({
     bookingClient: async ({ request, apiToken }, use) => {
         await use(new BookingClient(request, apiToken));
       },
-      bookingDbClient: async ({}, use) => {
+      bookingDbClient: [async ({}, use) => {
+        await db.init();
         await use(new BookingDbClient());
-      },
+        await db.close();
+      }, {scope: 'worker'}],
 });
 
 export { expect } from "@playwright/test";

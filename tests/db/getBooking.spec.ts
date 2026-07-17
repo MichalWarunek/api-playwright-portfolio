@@ -9,7 +9,6 @@ test.describe('Test Select Booking Record', () => {
  
  
  test.beforeAll(async ({bookingDbClient}) => {
-    await db.init();
     payload = bookingData.bookingPayload;
     createdId = await bookingDbClient.insertBooking(payload);
   });
@@ -17,7 +16,6 @@ test.describe('Test Select Booking Record', () => {
 
   test.afterAll(async ({bookingDbClient}) => {
     await bookingDbClient.deleteFromDb(createdId); 
-    await db.close();
   });
 
   test('Should SELECT existing booking from local SQLite', async ({bookingDbClient}) => {
