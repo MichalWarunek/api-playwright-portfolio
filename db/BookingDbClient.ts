@@ -17,7 +17,8 @@ export class BookingDbClient {
 
     async deleteFromDb(id: number) {
       if (id) {
-        await db.run('DELETE FROM bookings WHERE id = ?', [id]);
+        const result = await db.run('DELETE FROM bookings WHERE id = ?', [id]);
+        return result;
       }
     }
     async selectFromDb(id: number) {
