@@ -27,6 +27,13 @@ export class BookingDbClient {
        return dbRow;
       }
     }
+    async updateFromDb(id: number , payload: BookingInterface) {
+      if (id) {
+       const dbRow = await db.run('UPDATE bookings SET firstname=?, lastname=?, totalprice=?, depositpaid=?, checkin=?, checkout=?, additionalneeds=?  WHERE id = ?', [payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid, payload.bookingdates.checkin, payload.bookingdates.checkout, payload.additionalneeds, id]);
+       return dbRow;
+      }
+    }
+
     async insertBooking(payload: BookingInterface) {
       const result = await db.run(
         'INSERT INTO bookings (firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds) VALUES (?, ?, ?, ?, ?, ?, ?)',
