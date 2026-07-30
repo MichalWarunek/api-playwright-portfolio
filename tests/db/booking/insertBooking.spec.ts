@@ -1,6 +1,6 @@
-import { test, expect, BookingInterface } from "../../fixtures";
-import { db } from '../../helpers/dbHelper';
-import bookingData from "../../test-data/booking-data.json";
+import { test, expect, BookingInterface } from "../../../fixtures";
+import { db } from '../../../helpers/dbHelper';
+import bookingData from "../../../test-data/booking-data.json";
 
 test.describe('Test Insert Booking Record', () => {
  let payload: BookingInterface;

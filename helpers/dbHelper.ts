@@ -12,6 +12,8 @@ export const db = {
       });
       
 
+      await dbInstance.exec(`PRAGMA foreign_keys = ON;`);
+
       await dbInstance.exec(`
         CREATE TABLE IF NOT EXISTS bookings (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,6 +24,17 @@ export const db = {
           checkin TEXT NOT NULL,
           checkout TEXT NOT NULL,
           additionalneeds TEXT
+        )
+      `);
+      await dbInstance.exec(`
+        CREATE TABLE IF NOT EXISTS payments (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          booking_id INTEGER NOT NULL,
+          amount INTEGER NOT NULL,
+          payment_method TEXT NOT NULL,
+          status TEXT NOT NULL,
+          created_at TEXT NOT NULL,
+          FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE
         )
       `);
     }

@@ -1,5 +1,5 @@
-import { test, expect, BookingInterface } from "../../fixtures";
-import bookingData from "../../test-data/booking-data.json";
+import { test, expect, BookingInterface } from "../../../fixtures";
+import bookingData from "../../../test-data/booking-data.json";
 
 test.describe('Test Delete Booking Record', () => {
  

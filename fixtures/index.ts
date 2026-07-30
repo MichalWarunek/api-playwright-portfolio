@@ -3,12 +3,14 @@ import fs from 'fs';
 import path from 'path';
 import { BookingClient } from "../api/BookingClient";
 import { BookingDbClient, BookingInterface } from "../db/BookingDbClient";
+import { PaymentDbClient, PaymentInterface } from "../db/PaymentDbClient";
 import { db } from '../helpers/dbHelper';
 
 
 
 type MyFixtures = {
     bookingClient: BookingClient;
+    paymentDbClient: PaymentDbClient;
     apiToken: string;
 };
 
@@ -16,7 +18,7 @@ type MyWorkerFixtures = {
     bookingDbClient: BookingDbClient;
 }
 
-export { BookingInterface };
+export { BookingInterface, PaymentInterface };
 
 export const test = base.extend<MyFixtures, MyWorkerFixtures>({
     apiToken: async ({}, use) => {
@@ -35,6 +37,11 @@ export const test = base.extend<MyFixtures, MyWorkerFixtures>({
         await use(new BookingDbClient());
         await db.close();
       }, {scope: 'worker'}],
+    paymentDbClient: async ({}, use) => {
+      await db.init();
+        await use(new PaymentDbClient());
+        await db.close();
+    },
 });
 
 export { expect } from "@playwright/test";
