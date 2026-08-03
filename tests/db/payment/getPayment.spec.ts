@@ -11,10 +11,10 @@ test.describe('Test Select Booking Record', () => {
  
  
  test.beforeAll(async ({bookingDbClient, paymentDbClient}) => {
-    paymentPayload = paymentData.paymentPayload;
-    bookingPayload = bookingData.bookingPayload;
-    bookingCreatedId = await bookingDbClient.insertBooking(bookingPayload);
-    paymentCreatedId = await paymentDbClient.insertPayment(paymentPayload, bookingCreatedId);
+  paymentPayload = paymentData.paymentPayload;
+  bookingPayload = bookingData.bookingPayload;
+  bookingCreatedId = await bookingDbClient.insertBooking(bookingPayload);
+  paymentCreatedId = await paymentDbClient.insertPayment(paymentPayload, bookingCreatedId);
   });
 
 
@@ -25,6 +25,10 @@ test.describe('Test Select Booking Record', () => {
   test('Should SELECT existing payment from local SQLite', async ({paymentDbClient}) => {
     const dbRow = await paymentDbClient.selectFromDb(paymentCreatedId);
     expect(dbRow).toBeDefined();
-    console.log(dbRow)
+    expect(dbRow.id).toBe(paymentCreatedId);
+    expect(dbRow.amount).toBe(paymentPayload.amount);
+    expect(dbRow.paymentmethod).toBe(paymentPayload.paymentmethod);
+    expect(dbRow.status).toBe(paymentPayload.status);
+    expect(dbRow.createdat).toBe(paymentPayload.createdat);
   });
 });

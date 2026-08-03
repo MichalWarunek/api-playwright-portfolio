@@ -1,9 +1,9 @@
 {
     "paymentPayload": {
-        "booking_id": 111,
+        "bookingid": 111,
         "amount": 50,
-        "payment_method": "Link",
+        "paymentmethod": "Link",
         "status": "pending",
-        "created_at": "2026-06-01"
+        "createdat": "2026-06-01"
       }
 }

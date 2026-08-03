@@ -27,12 +27,23 @@ export class BookingDbClient {
        return dbRow;
       }
     }
+
+    async selectBookingsWithPayment(ids: number[]) {
+      if (ids.length === 0) return []; {
+        const placeholders = ids.map(() => '?').join(',');
+        const dbRows = await db.all(`SELECT * FROM bookings INNER JOIN payments ON bookings.id = payments.bookingid WHERE bookings.id IN (${placeholders})`, ids);
+        return dbRows;
+      }
+    }
+
     async updateFromDb(id: number , payload: BookingInterface) {
       if (id) {
        const dbRow = await db.run('UPDATE bookings SET firstname=?, lastname=?, totalprice=?, depositpaid=?, checkin=?, checkout=?, additionalneeds=?  WHERE id = ?', [payload.firstname, payload.lastname, payload.totalprice, payload.depositpaid, payload.bookingdates.checkin, payload.bookingdates.checkout, payload.additionalneeds, id]);
        return dbRow;
       }
     }
+
+  
 
     async insertBooking(payload: BookingInterface) {
       const result = await db.run(

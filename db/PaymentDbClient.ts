@@ -1,11 +1,11 @@
 import { db } from '../helpers/dbHelper';
 
 export interface PaymentInterface {
-  booking_id: number,
+  bookingid: number,
   amount: number,
-  payment_method: string,
+  paymentmethod: string,
   status: string,
-  created_at: string
+  createdat: string
 }
 
 export class PaymentDbClient {
@@ -24,8 +24,8 @@ export class PaymentDbClient {
 
     async insertPayment(payload: PaymentInterface, bookingId: number) {
       const result = await db.run(
-        'INSERT INTO payments (booking_id, amount, payment_method, status, created_at) VALUES (?, ?, ?, ?, ?)',
-        [bookingId, payload.amount, payload.payment_method, payload.status, payload.created_at]
+        'INSERT INTO payments (bookingid, amount, paymentmethod, status, createdat) VALUES (?, ?, ?, ?, ?)',
+        [bookingId, payload.amount, payload.paymentmethod, payload.status, payload.createdat]
       );
       return result.lastID!;
 

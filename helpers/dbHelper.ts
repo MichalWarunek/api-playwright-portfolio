@@ -29,12 +29,12 @@ export const db = {
       await dbInstance.exec(`
         CREATE TABLE IF NOT EXISTS payments (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          booking_id INTEGER NOT NULL,
+          bookingid INTEGER NOT NULL,
           amount INTEGER NOT NULL,
-          payment_method TEXT NOT NULL,
+          paymentmethod TEXT NOT NULL,
           status TEXT NOT NULL,
-          created_at TEXT NOT NULL,
-          FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE
+          createdat TEXT NOT NULL,
+          FOREIGN KEY (bookingid) REFERENCES bookings(id) ON DELETE CASCADE
         )
       `);
     }
@@ -53,6 +53,12 @@ export const db = {
       await db.init();
     }
     return await dbInstance!.get(sql, params);
+  },
+  all: async (sql: string, params: any[] = []) => {
+    if (!dbInstance) {
+      await db.init();
+    }
+    return await dbInstance!.all(sql, params);
   },
   
   close: async () => {
