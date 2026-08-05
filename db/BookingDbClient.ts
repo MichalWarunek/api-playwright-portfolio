@@ -29,15 +29,14 @@ export class BookingDbClient {
     }
 
     async selectBookingsWithPayment(ids: number[]) {
-      if (ids.length === 0) return []; {
+      if (ids.length === 0) return []; 
         const placeholders = ids.map(() => '?').join(',');
-        const dbRows = await db.all(`SELECT * FROM bookings INNER JOIN payments ON bookings.id = payments.bookingid WHERE bookings.id IN (${placeholders})`, ids);
+        const dbRows = await db.all(`SELECT b.*, p.id as paymentid, p.amount, p.paymentmethod, p.status, p.createdat FROM bookings b INNER JOIN payments p ON b.id = p.bookingid WHERE b.id IN (${placeholders})`, ids);
         return dbRows;
-      }
     }
 
     async selectAllBookingsAndPayment() {
-        const dbRows = await db.all('SELECT * FROM bookings LEFT JOIN payments ON bookings.id = payments.bookingid');
+        const dbRows = await db.all('SELECT b.*, p.id as paymentid, p.amount, p.paymentmethod, p.status, p.createdat FROM bookings b LEFT JOIN payments p ON b.id = p.bookingid');
         return dbRows;
     }
 
