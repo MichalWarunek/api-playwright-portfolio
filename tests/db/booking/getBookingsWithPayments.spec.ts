@@ -38,8 +38,9 @@ test.describe('Test Select Booking Records with Payments', () => {
     expect(result[0].id).toBe(createdBookingIds[0]);
   });
 
-  test('Should SELECT existing booking and payments from local SQLite', async ({bookingDbClient}) => {
-    const result = await bookingDbClient.selectAllBookingsAndPayment();
+
+  test('Should SELECT existing bookings and payments from local SQLite', async ({bookingDbClient}) => {
+    const result = await bookingDbClient.selectAllBookingsAndPayments();
     expect(result).toBeDefined();
     expect(result.length).toBeGreaterThanOrEqual(createdBookingIds.length);
     const bookingWithPayment = result.find(row => row.id === createdBookingIds[0]);
@@ -47,6 +48,16 @@ test.describe('Test Select Booking Records with Payments', () => {
     const bookingWithoutPayment = result.find(row => row.id === createdBookingIds[1]);
     expect(bookingWithoutPayment).toBeDefined();
     expect(bookingWithoutPayment.paymentid).toBeNull();
+  });
+
+  test('Should SELECT existing payments and bookings from local SQLite', async ({bookingDbClient}) => {
+    const result = await bookingDbClient.selectAllPaymentsAndBookings();
+    expect(result).toBeDefined();
+    expect(result.length).toBeGreaterThanOrEqual(1);
+    const bookingWithPayment = result.find(row => row.id === createdBookingIds[0]);
+    expect(bookingWithPayment.id).toBe(createdBookingIds[0]);
+    const bookingWithoutPayment = result.find(row => row.id === createdBookingIds[1]);
+    expect(bookingWithoutPayment).toBeUndefined();
   });
 
 

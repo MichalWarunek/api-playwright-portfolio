@@ -35,10 +35,15 @@ export class BookingDbClient {
         return dbRows;
     }
 
-    async selectAllBookingsAndPayment() {
+    async selectAllBookingsAndPayments() {
         const dbRows = await db.all('SELECT b.*, p.id as paymentid, p.amount, p.paymentmethod, p.status, p.createdat FROM bookings b LEFT JOIN payments p ON b.id = p.bookingid');
         return dbRows;
     }
+
+    async selectAllPaymentsAndBookings() {
+      const dbRows = await db.all('SELECT b.*, p.id as paymentid, p.amount, p.paymentmethod, p.status, p.createdat FROM payments p LEFT JOIN bookings b ON  p.bookingid = b.id');
+      return dbRows;
+  }
 
     async updateFromDb(id: number , payload: BookingInterface) {
       if (id) {
