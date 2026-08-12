@@ -9,3 +9,5 @@ node_modules/
 .env
 .auth/
 *.db
+allure-results
+allure-report

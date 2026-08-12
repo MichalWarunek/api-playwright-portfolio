@@ -9,7 +9,8 @@ test.describe('test DELETE responses for bookings', () => {
   });
 
   
-  test('Should delete particular booking ID', async ({ bookingClient }) => {
+  test('Should delete particular booking ID', async ({ bookingClient, allure }) => {
+    await allure.story("Successful booking deletion");
     const response = await bookingClient.deleteBooking(bookingId);
     expect(response.status()).toBe(201);
     const deletedBooking = await bookingClient.getBooking(bookingId);

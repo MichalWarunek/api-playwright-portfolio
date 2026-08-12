@@ -5,6 +5,7 @@ import { BookingClient } from "../api/BookingClient";
 import { BookingDbClient, BookingInterface } from "../db/BookingDbClient";
 import { PaymentDbClient, PaymentInterface } from "../db/PaymentDbClient";
 import { db } from '../helpers/dbHelper';
+import * as allure from 'allure-js-commons';
 
 
 
@@ -12,6 +13,7 @@ type MyFixtures = {
     bookingClient: BookingClient;
     paymentDbClient: PaymentDbClient;
     apiToken: string;
+    allure: typeof allure;
 };
 
 type MyWorkerFixtures = {
@@ -41,6 +43,9 @@ export const test = base.extend<MyFixtures, MyWorkerFixtures>({
       await db.init();
         await use(new PaymentDbClient());
         await db.close();
+    },
+    allure: async ({}, use) => {
+      await use(allure);
     },
 });
 

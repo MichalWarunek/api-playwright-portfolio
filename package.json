@@ -11,7 +11,9 @@
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
-    "@types/sqlite3": "^3.1.11"
+    "@types/sqlite3": "^3.1.11",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
