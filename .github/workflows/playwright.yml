@@ -4,6 +4,8 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  permissions:
+    contents: write
 
 jobs:
   test:
@@ -35,28 +37,27 @@ jobs:
         USER_NAME: ${{ secrets.USER_NAME }}
         USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
     - name: Get Allure history
-            uses: actions/checkout@v4
-            if: always()
-            continue-on-error: true
-            with:
-              ref: gh-pages
-              path: gh-pages
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
+      with:
+      ref: 
+       gh-pages
+       path: gh-pages
     - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.7
-        run: npx allure generate allure-results --clean
-        if: always()
-        with:
-              allure_results: allure-results
-              allure_history: allure-history
-              keep_reports: 20
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
-          publish_branch: gh-pages
-          publish_dir: allure-history
+      uses: simple-elf/allure-report-action@v1.7
+      if: always()
+      with:
+        allure_results: allure-results
+        allure_history: allure-history
+        keep_reports: 20
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
     - uses: actions/upload-artifact@v4
       if: always()
       with:
