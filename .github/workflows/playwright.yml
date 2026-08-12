@@ -4,8 +4,9 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  permissions:
-    contents: write
+
+permissions:
+  contents: write
 
 jobs:
   test:
@@ -41,8 +42,7 @@ jobs:
       if: always()
       continue-on-error: true
       with:
-      ref: 
-       gh-pages
+       ref: gh-pages
        path: gh-pages
     - name: Generate Allure Report
       uses: simple-elf/allure-report-action@v1.7
