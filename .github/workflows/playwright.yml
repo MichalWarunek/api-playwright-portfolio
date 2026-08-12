@@ -45,7 +45,7 @@ jobs:
        ref: gh-pages
        path: gh-pages
     - name: Generate Allure Report
-      uses: allure-framework/allure-github-action@v1.5
+      uses: simple-elf/allure-report-action@v1.15
       if: always()
       with:
         allure_results: allure-results
