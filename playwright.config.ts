@@ -9,28 +9,19 @@ import path from 'path';
 import * as fs from 'fs';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-export function setupAllureEnvironment() {
-  const resultsDir = path.resolve(process.cwd(), 'allure-results');
-
-  if (!fs.existsSync(resultsDir)) {
-    fs.mkdirSync(resultsDir, { recursive: true });
-  }
-
-  const envData = {
-    'Environment': process.env.TEST_ENV || 'Production',
-    'Base URL': process.env.BASE_URL || 'https://restful-booker.herokuapp.com',
-    'OS': `${process.platform} (${process.arch})`,
-    'Node Version': process.version,
-    'Playwright Version': require('@playwright/test/package.json').version,
-  };
-
-  const propertiesContent = Object.entries(envData)
-  .map(([key, value]) => `${key}=${value}`)
-  .join('\n');
-
-fs.writeFileSync(path.join(resultsDir, 'environment.properties'), propertiesContent);
-
+const allureResultsDir = path.resolve(__dirname, 'allure-results');
+if (!fs.existsSync(allureResultsDir)) {
+  fs.mkdirSync(allureResultsDir, { recursive: true });
 }
+
+const envProperties = `
+Platform=${process.platform}
+Node.js_Version=${process.version}
+ENV=${process.env.TEST_ENV || 'Production'}
+Base_URL=${process.env.BASE_URL || 'https://restful-booker.herokuapp.com'}
+`;
+
+fs.writeFileSync(path.join(allureResultsDir, 'environment.properties'), envProperties.trim());
 
 /**
  * See https://playwright.dev/docs/test-configuration.
