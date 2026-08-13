@@ -1,8 +1,7 @@
 import { test, expect, BookingInterface } from "../../../fixtures";
-import { db } from '../../../helpers/dbHelper';
 import bookingData from "../../../test-data/booking-data.json";
 
-test.describe('Test Insert Booking Record', () => {
+test.describe('Test Insert Booking Record @DB', () => {
  let payload: BookingInterface;
  let createdId: number;
  
@@ -10,7 +9,8 @@ test.describe('Test Insert Booking Record', () => {
     await bookingDbClient.deleteFromDb(createdId); 
   });
 
-  test('Should insert valid booking to the local SQLite', async ({bookingDbClient}) => {
+  test('Should insert valid booking to the local SQLite', async ({bookingDbClient, allure}) => {
+    await allure.story("Successful booking update");
     payload = bookingData.bookingPayload;
     createdId = await bookingDbClient.insertBooking(payload);
     const dbRow = await bookingDbClient.selectFromDb(createdId);
@@ -25,7 +25,8 @@ test.describe('Test Insert Booking Record', () => {
     expect(dbRow.additionalneeds).toBe(payload.additionalneeds);
   });
 
-  test('Should throws SQLITE_CONSTRAINT while inserting invalid booking to the local SQLite', async ({bookingDbClient}) => {
+  test('Should throws SQLITE_CONSTRAINT while inserting invalid booking to the local SQLite', async ({bookingDbClient, allure}) => {
+    await allure.story("Unsuccessful booking update with SQLITE_CONSTRAINT error");
     const invalidPayload = bookingData.invalidBookingPayload;
      await expect(async () => { 
         await bookingDbClient.insertBooking(invalidPayload as unknown as BookingInterface)}).rejects.toThrow('SQLITE_CONSTRAINT');

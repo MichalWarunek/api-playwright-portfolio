@@ -1,7 +1,7 @@
 import { test, expect, BookingInterface } from "../../../fixtures";
 import bookingData from "../../../test-data/booking-data.json";
 
-test.describe('Test Select Booking Record', () => {
+test.describe('Test Select Booking Record @DB', () => {
  
  let payload: BookingInterface;
  let createdId: number;
@@ -17,7 +17,8 @@ test.describe('Test Select Booking Record', () => {
     await bookingDbClient.deleteFromDb(createdId); 
   });
 
-  test('Should UPDATE existing booking from local SQLite', async ({bookingDbClient}) => {
+  test('Should UPDATE existing booking from local SQLite', async ({bookingDbClient, allure}) => {
+    await allure.story("Successful booking update");
     await bookingDbClient.updateFromDb(createdId, bookingData.bookingUpdate);
     const dbRow = await bookingDbClient.selectFromDb(createdId);
     expect(dbRow).toBeDefined();
@@ -31,7 +32,8 @@ test.describe('Test Select Booking Record', () => {
     expect(dbRow.additionalneeds).toBe(bookingData.bookingUpdate.additionalneeds);
   });
 
-  test('Should UPDATE not existing booking from local SQLite', async ({bookingDbClient}) => {
+  test('Should UPDATE not existing booking from local SQLite', async ({bookingDbClient, allure}) => {
+    await allure.story("Unsuccessful booking update with invalid ID");
     const nonExistingId = 9999;
     const result = await bookingDbClient.updateFromDb(nonExistingId, bookingData.bookingUpdate);
     expect(result?.changes).toBe(0);

@@ -1,7 +1,7 @@
 import { test, expect } from "../../fixtures";
 import bookingData from "../../test-data/booking-data.json";
 
-test.describe('test DELETE responses for bookings', () => {
+test.describe('test DELETE responses for bookings @API', () => {
   let bookingId: string;
   
   test.beforeEach(async ({ bookingClient }) => {
@@ -17,12 +17,14 @@ test.describe('test DELETE responses for bookings', () => {
     expect(deletedBooking.status()).toBe(404);
   });
 
-  test('Should throw an error if particular booking ID is invalid', async ({ bookingClient }) => {
+  test('Should throw an error if particular booking ID is invalid', async ({ bookingClient, allure }) => {
+    await allure.story("Unsuccessful booking deletion with invalid ID");
     const response = await bookingClient.deleteBooking(bookingData.invalidBooking.id);
     expect(response.status()).toBe(405);
   });
 
-  test('Should throw an error if user is not authorized', async ({ bookingClient }) => {
+  test('Should throw an error if user is not authorized', async ({ bookingClient, allure }) => {
+    await allure.story("Unsuccessful booking deletion with unauthorized user");
     const response = await bookingClient.deleteBooking(bookingId, bookingData.invalidToken.token);
     expect(response.status()).toBe(403);
   });

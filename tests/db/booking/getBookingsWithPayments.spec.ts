@@ -2,7 +2,7 @@ import { test, expect, PaymentInterface, BookingInterface } from "../../../fixtu
 import paymentData from "../../../test-data/payment-data.json";
 import bookingData from "../../../test-data/booking-data.json";
 
-test.describe('Test Select Booking Records with Payments', () => {
+test.describe('Test Select Booking Records with Payments @DB', () => {
  
  let paymentPayload: PaymentInterface;
  let bookingPayload: BookingInterface;
@@ -31,7 +31,8 @@ test.describe('Test Select Booking Records with Payments', () => {
   });
 
 
-  test('Should SELECT existing booking with payments only from local SQLite', async ({bookingDbClient}) => {
+  test('Should SELECT existing booking with payments only from local SQLite', async ({bookingDbClient, allure}) => {
+    await allure.story("Retrieve booking details with payments only successfully");
     const result = await bookingDbClient.selectBookingsWithPayment(createdBookingIds);
     expect(result).toBeDefined();
     expect(result.length).toBe(1);
@@ -39,7 +40,8 @@ test.describe('Test Select Booking Records with Payments', () => {
   });
 
 
-  test('Should SELECT existing bookings and payments from local SQLite', async ({bookingDbClient}) => {
+  test('Should SELECT existing bookings and payments from local SQLite', async ({bookingDbClient, allure}) => {
+    await allure.story("Retrieve all booking details and payments successfully");
     const result = await bookingDbClient.selectAllBookingsAndPayments();
     expect(result).toBeDefined();
     expect(result.length).toBeGreaterThanOrEqual(createdBookingIds.length);
@@ -50,7 +52,8 @@ test.describe('Test Select Booking Records with Payments', () => {
     expect(bookingWithoutPayment.paymentid).toBeNull();
   });
 
-  test('Should SELECT existing payments and bookings from local SQLite', async ({bookingDbClient}) => {
+  test('Should SELECT existing payments and bookings from local SQLite', async ({bookingDbClient, allure}) => {
+    await allure.story("Retrieve all payments and booking details successfully");
     const result = await bookingDbClient.selectAllPaymentsAndBookings();
     expect(result).toBeDefined();
     expect(result.length).toBeGreaterThanOrEqual(1);

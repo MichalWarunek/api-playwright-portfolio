@@ -6,7 +6,31 @@ import { defineConfig, devices } from '@playwright/test';
  */
 import dotenv from 'dotenv';
 import path from 'path';
+import * as fs from 'fs';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+export function setupAllureEnvironment() {
+  const resultsDir = path.resolve(process.cwd(), 'allure-results');
+
+  if (!fs.existsSync(resultsDir)) {
+    fs.mkdirSync(resultsDir, { recursive: true });
+  }
+
+  const envData = {
+    'Environment': process.env.TEST_ENV || 'Production',
+    'Base URL': process.env.BASE_URL || 'https://restful-booker.herokuapp.com',
+    'OS': `${process.platform} (${process.arch})`,
+    'Node Version': process.version,
+    'Playwright Version': require('@playwright/test/package.json').version,
+  };
+
+  const propertiesContent = Object.entries(envData)
+  .map(([key, value]) => `${key}=${value}`)
+  .join('\n');
+
+fs.writeFileSync(path.join(resultsDir, 'environment.properties'), propertiesContent);
+
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.

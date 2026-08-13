@@ -1,7 +1,7 @@
 import { test, expect } from "../../fixtures";
 import bookingData from "../../test-data/booking-data.json";
 
-test.describe('test PUT responses for bookings', () => {
+test.describe('test PUT responses for bookings @API', () => {
   let bookingId: string;
   
   test.beforeAll(async ({ bookingClient }) => {
@@ -14,7 +14,8 @@ test.describe('test PUT responses for bookings', () => {
     }
   });
   
-  test('Should update particular booking ID', async ({ bookingClient }) => {
+  test('Should update particular booking ID', async ({ bookingClient, allure }) => {
+    await allure.story("Successful booking update");
     const bookingPayload = await bookingClient.getBooking(bookingId);
     expect(bookingPayload.status()).toBe(200);
     const body = await bookingPayload.json();
