@@ -11,3 +11,4 @@ node_modules/
 *.db
 allure-results
 allure-report
+restful-booker
