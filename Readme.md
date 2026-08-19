@@ -108,7 +108,7 @@ The GitHub Actions workflow triggers automatically on every push or pull_request
 ├── fixtures/               # Playwright test fixtures and custom setups
 ├── helpers/                # Reusable helper functions and utility modules
 ├── test-data/              # Static or dynamic test data (payloads, JSONs)
-├── tests/                  # API and E2E test suites
+├── tests/                  # API and DB test suites
 │   ├── api/                # API test specs
 │   ├── auth/               # Authentication test specs
 │   └── db/                 # Database test specs
